@@ -1,27 +1,24 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
+import Welcome from './Welcome'
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+      <React.Fragment>
+        <div>
+          <header>
+            <img src='https://i0.wp.com/meebily.com/wp-content/uploads/2018/07/NBA-Trivia-questions-answers-quiz-game.jpeg?fit=600%2C400&ssl=1' style={{width: '180px', height: '150px'}} className="App-logo" alt="logo" />
+            <br></br><br></br>
+            <p>
+              Welcome to NBA Player Trivia -- College Edition
+            </p>
+          </header>
+        </div>
+        < Welcome />
+      </React.Fragment>
+    )
   }
 }
 
