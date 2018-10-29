@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import playersHash from './data'
-import { Input } from 'semantic-ui-react'
 
 class Gameplay extends Component {
 
   state = {
     allPlayers: null,
     currPlayer: null,
-    currInput: ""
+    currInput: "",
+    showAnswer: false
   }
 
   componentDidMount(){
@@ -23,7 +23,7 @@ class Gameplay extends Component {
     while(player === null){
       let randomNum = Math.floor(Math.random() * this.state.allPlayers.length)
       let currPlayer = this.state.allPlayers[randomNum]
-      if(currPlayer.collegeName !== "" && !currPlayer.collegeName.includes(',') && !currPlayer.collegeName.includes('HS')){
+      if(currPlayer.collegeName !== "" && !currPlayer.collegeName.includes(',') && !currPlayer.collegeName.includes('HS') && currPlayer !== this.state.currPlayer){
         player = currPlayer
       }
     }
@@ -46,15 +46,15 @@ class Gameplay extends Component {
         {!!this.state.currPlayer &&
           <React.Fragment>
             <div>What college did {this.state.currPlayer.firstName} {this.state.currPlayer.lastName} go to?</div>
-              <form onSubmit={() => this.formSubmitted()}>
-              <Input focus placeholder='Answer...'
-                     value={this.state.currInput}
-                     onChange={(event) => this.handleChange(event)}
-                />
-              <Input  type='submit'
-                      value="Submit"
-                />
-            </form>
+            {!this.state.showAnswer
+            ?
+            <button onClick={() => this.setState({ showAnswer: true })}>View Answer</button>
+            :
+            <React.Fragment>
+              <button onClick={() => {this.getRandomPlayer(); this.setState({ showAnswer: false }) }}>Next</button>
+              <div>{this.state.currPlayer.collegeName}</div>              
+            </React.Fragment>
+            }
         </React.Fragment>
         }
 
