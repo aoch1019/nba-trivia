@@ -1,16 +1,24 @@
 import React, { Component } from 'react';
 import playersHash from './data'
 import { Button, Header, Label, Segment } from 'semantic-ui-react'
+import Search from './Search'
 
 class Gameplay extends Component {
 
-  state = {
-    allPlayers: null,
-    currPlayer: null,
-    currInput: "",
-    showAnswer: false,
-    completedPlayers: []
+  constructor(props){
+    super(props)
+
+    this.state = {
+      allPlayers: null,
+      currPlayer: null,
+      showAnswer: false,
+      completedPlayers: []
+    }
+
+    this.setCurrPlayer = this.setCurrPlayer.bind(this)
   }
+
+
 
   componentDidMount(){
     this.getAllPlayers()
@@ -32,19 +40,21 @@ class Gameplay extends Component {
     this.setState({ currPlayer: player })
   }
 
-  handleChange(event){
-    this.setState({
-      currInput: event.target.value
-    }, () => this.state.currInput)
-  }
-
-  formSubmitted(){
-    debugger
+  setCurrPlayer(currInput){
+    let playerObj = this.state.allPlayers.find(player => `${player.firstName} ${player.lastName}`.toLowerCase() === currInput.toLowerCase())
+    if(!!playerObj){
+      this.setState({ currPlayer: playerObj })
+    }
+    else{
+      alert("Player not found")
+    }
   }
 
   render(){
     return(
       <React.Fragment>
+        <br></br>
+        < Search setCurrPlayer={this.setCurrPlayer}/>
         <br></br>
         {!!this.state.currPlayer &&
           <Segment raised textAlign='center'>
@@ -54,7 +64,7 @@ class Gameplay extends Component {
             <Button onClick={() => this.setState({ showAnswer: true })}>View Answer</Button>
             :
             <React.Fragment>
-              <Button onClick={() => {this.setState({ showAnswer: false, completedPlayers: [...this.state.completedPlayers, this.state.currPlayer] }); this.getRandomPlayer()}}>Next</Button>
+              <Button onClick={() => {this.setState({ showAnswer: false, completedPlayers: [this.state.currPlayer, ...this.state.completedPlayers] }); this.getRandomPlayer()}}>Next</Button>
               <br></br><br></br>
               <Label color='blue'><Header as='h4' color='yellow'>{this.state.currPlayer.collegeName}</Header></Label>
             </React.Fragment>
@@ -78,7 +88,7 @@ class Gameplay extends Component {
                     </th>
                   </tr>
 
-                  {this.state.completedPlayers.reverse().map((player, idx) => {
+                  {this.state.completedPlayers.map((player, idx) => {
                     return <tr key={idx} className="center aligned">
                             <th>
                               <h5 className="ui left aligned header">

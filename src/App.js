@@ -9,6 +9,7 @@ class App extends Component {
     return (
       <Container textAlign='center'>
         <div>
+          <br></br>
           <header>
             <Image src='https://i0.wp.com/meebily.com/wp-content/uploads/2018/07/NBA-Trivia-questions-answers-quiz-game.jpeg?fit=600%2C400&ssl=1' circular centered style={{width: '180px', height: '150px'}} className="App-logo" alt="logo" />
             <br></br><br></br>
@@ -17,6 +18,7 @@ class App extends Component {
             </Header>
           </header>
         </div>
+        <br></br>
         < Welcome />
     </Container>
     )
